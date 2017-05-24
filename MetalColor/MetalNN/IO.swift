@@ -18,14 +18,15 @@ func Input(device: MTLDevice)->Layer{
     let gray3Fun = library.makeFunction(name: "gray")!
     let gray3 = try! device.makeComputePipelineState(function: gray3Fun)
     return { (commandbuffer, input) in
+        let size = 160
         let scaledID = MPSImageDescriptor(channelFormat: .float16,
-                                          width: 224,
-                                          height: 224,
+                                          width: size,
+                                          height: size,
                                           featureChannels: 1)
 
         let outputID = MPSImageDescriptor(channelFormat: .float16,
-                                          width: 224,
-                                          height: 224,
+                                          width: size,
+                                          height: size,
                                           featureChannels: 3)
         let scaled = MPSTemporaryImage(commandBuffer: commandbuffer, imageDescriptor: scaledID)
         let output = MPSTemporaryImage(commandBuffer: commandbuffer, imageDescriptor: outputID)

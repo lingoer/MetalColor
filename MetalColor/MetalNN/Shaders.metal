@@ -109,7 +109,7 @@ kernel void add(
 }
 
 constexpr sampler s(coord::normalized,
-                              address::clamp_to_zero,
+                              address::clamp_to_edge,
                               filter::linear);
 
 kernel void display(texture2d<half, access::sample> yTexture [[texture(0)]],
