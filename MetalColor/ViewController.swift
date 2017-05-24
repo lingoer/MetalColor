@@ -30,6 +30,11 @@ class ViewController: UIViewController {
     let semaphoreDraw = DispatchSemaphore(value: 0)
     let semaphoreCapture = DispatchSemaphore(value: 1)
 
+    @IBOutlet weak var label: UILabel!
+    @IBAction func changeQuality(_ sender: UISlider) {
+        InputImageSize = Int(64 + (sender.value * 160))
+        label.text = "Quality: \(InputImageSize)"
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +62,7 @@ class ViewController: UIViewController {
         try? session.addInput(AVCaptureDeviceInput(device: videoDevice))
         session.addOutput(output)
         output.connection(withMediaType: AVMediaTypeVideo).videoOrientation = .portrait
-        session.sessionPreset = AVCaptureSessionPresetLow
+        session.sessionPreset = AVCaptureSessionPreset352x288
         session.startRunning()
     }
 
@@ -118,6 +123,7 @@ extension ViewController: MTKViewDelegate{
         commandBuffer.waitUntilCompleted()
         drawable.present()
         semaphoreCapture.signal()
+        
     }
 }
 

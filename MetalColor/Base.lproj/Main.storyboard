@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,24 +22,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mtkView contentMode="scaleToFill" colorPixelFormat="BGRA8Unorm" depthStencilPixelFormat="Depth32Float" preferredFramesPerSecond="15" translatesAutoresizingMaskIntoConstraints="NO" id="caA-UY-1HU">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            <mtkView contentMode="scaleToFill" colorPixelFormat="BGRA8Unorm" depthStencilPixelFormat="Depth32Float" translatesAutoresizingMaskIntoConstraints="NO" id="caA-UY-1HU">
+                                <rect key="frame" x="0.0" y="20" width="375" height="307"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="caA-UY-1HU" secondAttribute="height" multiplier="352:288" id="jW0-Au-lkW"/>
+                                </constraints>
                             </mtkView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="YQu-cM-2fg">
+                                <rect key="frame" x="37" y="397" width="300" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="296" id="j1y-UE-3tQ"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="changeQuality:" destination="BYZ-38-t0r" eventType="valueChanged" id="EZ8-6K-XfA"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quality: 144" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lG2-f4-uSe">
+                                <rect key="frame" x="142" y="356" width="91.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="caA-UY-1HU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="3JC-2w-hf2"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="caA-UY-1HU" secondAttribute="bottom" id="I0D-Yp-CST"/>
+                            <constraint firstItem="lG2-f4-uSe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5c2-jE-3c4"/>
                             <constraint firstAttribute="trailing" secondItem="caA-UY-1HU" secondAttribute="trailing" id="SRx-W7-IPO"/>
+                            <constraint firstItem="YQu-cM-2fg" firstAttribute="centerX" secondItem="caA-UY-1HU" secondAttribute="centerX" id="XU5-dZ-CwV"/>
+                            <constraint firstItem="YQu-cM-2fg" firstAttribute="top" secondItem="caA-UY-1HU" secondAttribute="bottom" constant="70" id="evd-SZ-jzm"/>
                             <constraint firstItem="caA-UY-1HU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="j3Y-ai-H70"/>
+                            <constraint firstItem="lG2-f4-uSe" firstAttribute="top" secondItem="caA-UY-1HU" secondAttribute="bottom" constant="29" id="yGt-HW-xjg"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="label" destination="lG2-f4-uSe" id="pth-xY-M0y"/>
                         <outlet property="mtkView" destination="caA-UY-1HU" id="po9-HI-xMn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="32.799999999999997" y="113.79310344827587"/>
         </scene>
     </scenes>
 </document>

@@ -9,6 +9,7 @@
 import UIKit
 import MetalPerformanceShaders
 
+var InputImageSize = 144
 
 
 func Input(device: MTLDevice)->Layer{
@@ -18,15 +19,14 @@ func Input(device: MTLDevice)->Layer{
     let gray3Fun = library.makeFunction(name: "gray")!
     let gray3 = try! device.makeComputePipelineState(function: gray3Fun)
     return { (commandbuffer, input) in
-        let size = 160
         let scaledID = MPSImageDescriptor(channelFormat: .float16,
-                                          width: size,
-                                          height: size,
+                                          width: InputImageSize,
+                                          height: InputImageSize,
                                           featureChannels: 1)
 
         let outputID = MPSImageDescriptor(channelFormat: .float16,
-                                          width: size,
-                                          height: size,
+                                          width: InputImageSize,
+                                          height: InputImageSize,
                                           featureChannels: 3)
         let scaled = MPSTemporaryImage(commandBuffer: commandbuffer, imageDescriptor: scaledID)
         let output = MPSTemporaryImage(commandBuffer: commandbuffer, imageDescriptor: outputID)
