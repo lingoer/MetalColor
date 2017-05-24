@@ -123,7 +123,9 @@ kernel void display(texture2d<half, access::sample> yTexture [[texture(0)]],
     }
     float texSize = float(1.0/outTexture.get_width());
     float2 pos = float2(gid) * texSize;
-
+    if (pos.y > 1){
+        return;
+    }
     half y = yTexture.sample(s,pos).x;
     half u = cbcrTexture.sample(s,pos).r;
     half v = cbcrTexture.sample(s,pos).g;
