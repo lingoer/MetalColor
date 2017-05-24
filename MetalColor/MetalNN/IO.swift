@@ -42,7 +42,7 @@ func Input(device: MTLDevice)->Layer{
 }
 
 func AdjustGray(device: MTLDevice)->Layer{
-    let scale = MPSCNNNeuronLinear(device: device, a: 1, b: 0)
+    let scale = MPSCNNNeuronLinear(device: device, a: 1, b: -0.5)
     return { (commandbuffer, image) in
         let outputID = MPSImageDescriptor(channelFormat: .float16,
                                           width: image.width,

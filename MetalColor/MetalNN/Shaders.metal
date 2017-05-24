@@ -62,28 +62,7 @@ kernel void upscaleAdd(
         gid.y >= dest.get_height()) {
         return;
     }
-    half4 source_color;
-    if(source.get_width() < dest.get_width()){
-        ushort x = gid.x/2;
-        ushort y = gid.y/2;
-        source_color = source.read(gid.xy/2,gid.z);
-        ushort mixCount = 1;
-        if (gid.x & 1) {
-            source_color += source.read(ushort2(x+1,y), gid.z);
-            mixCount += 1;
-        }
-        if (gid.y & 1) {
-            source_color += source.read(ushort2(x,y+1), gid.z);
-            mixCount += 1;
-        }
-        if (mixCount == 3){
-            source_color += source.read(ushort2(x+1,y+1), gid.z);
-            mixCount += 1;
-        }
-        source_color = source_color/mixCount;
-    }else{
-        source_color = source.read(gid.xy, gid.z);
-    }
+    half4 source_color = source.read(gid.xy/2, gid.z);
     half4 mask_color = mask.read(gid.xy, gid.z);
     half4 result_color = source_color + mask_color;
 
@@ -127,8 +106,7 @@ kernel void display(texture2d<half, access::sample> yTexture [[texture(0)]],
         return;
     }
     half y = yTexture.sample(s,pos).x;
-    half u = cbcrTexture.sample(s,pos).r;
-    half v = cbcrTexture.sample(s,pos).g;
+    half2 uv = cbcrTexture.sample(s,pos).rg;
 
     half3 colorOffset = half3( -179.45599365/255, 135.45983887/255 , -226.81599426/255);
     half3x3 colorMatrix = half3x3(
@@ -136,7 +114,7 @@ kernel void display(texture2d<half, access::sample> yTexture [[texture(0)]],
                                   half3(0.000, -.34413999, 1.77199996),
                                   half3(1.40199995, -0.71414, 0.000)
                                   );
-    half3 yuv = half3(y,u,v);
+    half3 yuv = half3(y,uv);
     half3 rgb = colorMatrix * yuv + colorOffset;
 
     outTexture.write(half4(rgb, 1), gid);
